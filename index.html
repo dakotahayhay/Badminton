@@ -1,0 +1,1941 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>"羽"你同行,横扫全场🏸</title>
+  <style>
+    :root {
+      --bg-color: #f8f6ef;
+      --accent: #6fbe78;
+      --accent-soft: rgba(111, 190, 120, 0.18);
+      --text-primary: #1f2a24;
+      --text-secondary: #5a6a61;
+      --border-soft: rgba(111, 190, 120, 0.25);
+      --radius-lg: 18px;
+      --radius-sm: 10px;
+      --shadow-soft: 0 14px 30px rgba(98, 145, 105, 0.18);
+      --shadow-strong: 0 18px 36px rgba(66, 100, 74, 0.24);
+      --transition-fast: 180ms ease-in-out;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: linear-gradient(135deg, #faf7f0 0%, #f1f7f1 55%, #f5fbf4 100%);
+      color: var(--text-primary);
+      min-height: 100vh;
+      padding: 32px 24px 64px;
+    }
+
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      max-width: 1120px;
+      margin: 0 auto 24px;
+    }
+
+    .title-block h1 {
+      font-size: 2.4rem;
+      letter-spacing: 0.5px;
+    }
+
+    .primary-button, .secondary-button, .ghost-button, .icon-button {
+      border: none;
+      cursor: pointer;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      transition: all var(--transition-fast);
+    }
+
+    .primary-button {
+      background: linear-gradient(135deg, #6fbe78, #83d28a);
+      color: #fff;
+      padding: 12px 20px;
+      box-shadow: 0 12px 24px rgba(111, 190, 120, 0.3);
+    }
+
+    .primary-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 28px rgba(111, 190, 120, 0.32);
+    }
+
+    .primary-button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .secondary-button {
+      background: var(--accent-soft);
+      color: var(--accent);
+      padding: 10px 16px;
+    }
+
+    .secondary-button:hover {
+      background: rgba(111, 190, 120, 0.28);
+    }
+
+    .ghost-button {
+      background: transparent;
+      color: var(--text-secondary);
+      padding: 10px 16px;
+    }
+
+    .icon-button {
+      background: transparent;
+      padding: 6px;
+      font-size: 1.2rem;
+    }
+
+    .layout {
+      display: grid;
+      gap: 24px;
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .panel {
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-soft);
+      background: rgba(255, 255, 255, 0.9);
+      transition: transform var(--transition-fast);
+    }
+
+    .panel:hover { transform: translateY(-2px); }
+
+    .announcement-panel h2, .declaration-panel h2, .panel-header h2 {
+      margin: 0 0 16px;
+      font-size: 1.8rem;
+      color: var(--accent);
+    }
+
+    .announcement-line, .announcement-address {
+      margin: 8px 0;
+      line-height: 1.6;
+    }
+
+    .announcement-address { font-weight: 600; }
+
+    .declaration-panel ul {
+      margin: 16px 0 0;
+      padding-left: 20px;
+      line-height: 1.65;
+      color: var(--text-secondary);
+    }
+
+    .declaration-panel li + li { margin-top: 6px; }
+
+    .rule-highlight, .marker-highlight {
+      display: inline-flex;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(111, 190, 120, 0.16);
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .copyable-email {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .copy-email-button {
+      border: none;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(111, 190, 120, 0.18);
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: background var(--transition-fast);
+    }
+
+    .copy-email-button:hover { background: rgba(111, 190, 120, 0.28); }
+    .copy-email-button.copied { background: rgba(111, 190, 120, 0.4); }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .stat-card {
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: var(--radius-sm);
+      padding: 18px;
+      border: 1px solid rgba(111, 190, 120, 0.22);
+    }
+
+    .stat-label { 
+      display: block; 
+      font-size: 0.95rem; 
+      color: var(--text-secondary); 
+      margin-bottom: 6px; 
+    }
+    
+    .stat-value { 
+      font-size: 2rem; 
+      font-weight: 700; 
+      color: var(--accent); 
+    }
+
+    .entrance-panel { margin-bottom: 20px; }
+    
+    .entry-grid { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
+      gap: 12px; 
+    }
+
+    .entry-card {
+      padding: 16px;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.85);
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      text-align: center;
+    }
+
+    .entry-card h3 { margin: 0 0 6px; }
+    .entry-card p { margin: 0; color: var(--text-secondary); font-size: 0.9rem; }
+    .entry-card.active { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(111, 190, 120, 0.2); }
+    .entry-card:hover { transform: translateY(-2px); }
+
+    .form-grid { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); 
+      gap: 16px; 
+      margin-bottom: 20px; 
+    }
+
+    .form-field { 
+      display: flex; 
+      flex-direction: column; 
+      gap: 6px; 
+    }
+    
+    .form-field > span:first-child { 
+      font-weight: 600; 
+    }
+    
+    .field-label { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+    }
+    
+    .field-label > span:first-child {
+      font-weight: 600;
+    }
+    
+    .hint { 
+      font-size: 0.85rem; 
+      color: var(--text-secondary); 
+      font-weight: 400; 
+    }
+
+    .date-selector { display: flex; flex-direction: column; gap: 8px; }
+    .date-actions { display: flex; gap: 8px; align-items: center; }
+    .date-actions input[type="text"] {
+      flex: 1;
+      padding: 10px 12px;
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.9);
+      font-weight: 600;
+    }
+
+    .date-note { color: var(--text-secondary); font-size: 0.85rem; }
+
+    .schedule-summary {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(111, 190, 120, 0.24);
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(111, 190, 120, 0.08);
+      font-weight: 600;
+    }
+
+    .summary-pill {
+      display: inline-flex;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.85rem;
+    }
+
+    .session-list {
+      list-style: none;
+      margin: 12px 0 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 10px;
+    }
+
+    .session-list li {
+      background: rgba(111, 190, 120, 0.12);
+      border: 1px solid rgba(111, 190, 120, 0.24);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .session-list li:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 20px rgba(111, 190, 120, 0.18);
+    }
+
+    .session-list li.is-active {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(111, 190, 120, 0.18);
+    }
+
+    .session-badge {
+      display: inline-flex;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(111, 190, 120, 0.18);
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .session-iso {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .time-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      font-weight: 600;
+    }
+
+    .fixed-field {
+      background: rgba(111, 190, 120, 0.12);
+      border-radius: var(--radius-sm);
+      padding: 10px 16px;
+    }
+
+    .participant-input {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .participant-input input {
+      flex: 1;
+      padding: 10px 12px;
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .participants {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 10px;
+    }
+
+    .participants li {
+      background: rgba(111, 190, 120, 0.12);
+      border: 1px solid rgba(111, 190, 120, 0.24);
+      border-radius: var(--radius-sm);
+      padding: 10px 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+    }
+
+    .participants li.empty {
+      justify-content: center;
+      color: var(--text-secondary);
+      font-weight: 500;
+      border-style: dashed;
+      background: rgba(111, 190, 120, 0.05);
+    }
+
+    .participants li.dropin-member {
+      background: rgba(255, 193, 7, 0.18);
+      border: 1px solid rgba(255, 193, 7, 0.35);
+    }
+
+    .participant-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: rgba(111, 190, 120, 0.32);
+      color: var(--accent);
+      font-size: 0.85rem;
+    }
+
+    .participant-name { flex: 1; }
+
+    .participants li button {
+      background: rgba(214, 92, 92, 0.18);
+      color: rgba(214, 92, 92, 1);
+      border: none;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: bold;
+      transition: all var(--transition-fast);
+    }
+
+    .participants li button:hover { background: rgba(214, 92, 92, 0.3); }
+
+    .participant-type-badge {
+      font-size: 0.75rem;
+      padding: 2px 6px;
+      border-radius: 8px;
+      background: rgba(255, 193, 7, 0.25);
+      color: #f57c00;
+      font-weight: 600;
+    }
+
+    .records-grid { display: grid; gap: 16px; }
+
+    .record-card {
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid rgba(111, 190, 120, 0.22);
+      border-radius: var(--radius-sm);
+      padding: 18px;
+      box-shadow: var(--shadow-soft);
+      display: grid;
+      gap: 14px;
+    }
+
+    .record-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .record-date { font-weight: 700; margin: 0 0 4px; }
+    .record-time { margin: 0; color: var(--text-secondary); font-size: 0.9rem; }
+    .record-entry { 
+      display: inline-block;
+      margin-top: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(111, 190, 120, 0.18);
+      color: var(--accent);
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    .record-fee { margin: 0; font-weight: 600; }
+
+    .record-actions { display: flex; gap: 8px; }
+
+    .record-participants {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 8px;
+    }
+
+    .record-participants li {
+      background: rgba(111, 190, 120, 0.12);
+      border-radius: 12px;
+      padding: 8px 10px;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .record-participants .participant-num {
+      background: rgba(111, 190, 120, 0.3);
+      color: var(--accent);
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+    }
+
+    .record-participants li.dropin-member {
+      background: rgba(255, 193, 7, 0.18);
+      border: 1px solid rgba(255, 193, 7, 0.35);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+      margin-top: 16px;
+    }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.55);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .modal-overlay.active { display: flex; }
+
+    .modal-content {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      max-width: 520px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: var(--shadow-strong);
+      padding: 28px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .modal-header h2 { margin: 0; }
+
+    .modal-close {
+      border: none;
+      background: rgba(214, 92, 92, 0.18);
+      color: rgba(214, 92, 92, 1);
+      border-radius: 50%;
+      width: 28px;
+      height: 28px;
+      cursor: pointer;
+      font-size: 1rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background var(--transition-fast);
+      flex-shrink: 0;
+    }
+
+    .modal-close:hover { background: rgba(214, 92, 92, 0.3); }
+
+    .password-actions, .dropin-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+
+    .dropin-banner {
+      background: rgba(255, 193, 7, 0.2);
+      border-radius: var(--radius-sm);
+      padding: 12px;
+      line-height: 1.6;
+      color: #8c5a00;
+      font-size: 0.92rem;
+    }
+
+    .dropin-verify {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .payment-check {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+    }
+
+    .checkin-list, .fixed-members-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 8px;
+      max-height: 320px;
+      overflow-y: auto;
+    }
+
+    .checkin-item, .fixed-members-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border: 1px solid rgba(111, 190, 120, 0.24);
+      border-radius: var(--radius-sm);
+      background: rgba(111, 190, 120, 0.08);
+    }
+
+    .checkin-item input { width: 18px; height: 18px; cursor: pointer; }
+    .checkin-item label { flex: 1; font-weight: 500; cursor: pointer; }
+
+    .fixed-members-list li { justify-content: space-between; }
+
+    .fixed-members-list li button {
+      border: none;
+      background: rgba(214, 92, 92, 0.18);
+      color: rgba(214, 92, 92, 1);
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background var(--transition-fast);
+    }
+
+    .fixed-members-list li button:hover { background: rgba(214, 92, 92, 0.3); }
+
+    @media (max-width: 768px) {
+      body { padding: 24px 16px 48px; }
+      .page-header { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <header class="page-header">
+    <div class="title-block">
+      <h1>🏸 "羽"你同行,横扫全场 🏸</h1>
+      <p style="margin: 8px 0 0; color: var(--text-secondary); font-size: 0.95rem;">
+        💚 每周一、三相约球场 · 挥洒汗水 · 享受运动 💚
+      </p>
+    </div>
+    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+      <button id="admin-button" class="secondary-button">👤 管理员</button>
+      <button id="new-activity-button" class="primary-button">➕ 新增活动</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="panel announcement-panel">
+      <h2>📢 羽林战令 📢</h2>
+      <div style="background: linear-gradient(135deg, rgba(111, 190, 120, 0.08), rgba(111, 190, 120, 0.03)); padding: 16px; border-radius: var(--radius-sm); border-left: 4px solid var(--accent); margin-bottom: 12px;">
+        <p class="announcement-line" style="font-weight: 700; font-size: 1.1rem; color: var(--text-primary);">🎯 各位战将注意!</p>
+        <p class="announcement-line">⏰ 本队每周一、周三晚 19:00—21:00,必定在球场集结!</p>
+        <p class="announcement-line">💪 无论风雨、无论疲惫,手握球拍,就是战斗的信号!</p>
+        <p class="announcement-line" style="font-weight: 700; color: var(--accent);">⚡ 来者,必全力以赴;缺席者,自认败阵 ⚡</p>
+        <p class="announcement-line">🎉 我们可选挑战性,可选友谊性,打可乐,打柠檬茶 🏸✨</p>
+      </div>
+      <div style="display: flex; align-items: center; gap: 8px; padding: 12px; background: rgba(111, 190, 120, 0.06); border-radius: var(--radius-sm);">
+        <span style="font-size: 1.5rem;">📍</span>
+        <p class="announcement-address" style="margin: 0;">地址: 1853 120 Ave NE, Calgary, AB T3K 0S5</p>
+      </div>
+    </section>
+
+    <section class="panel declaration-panel">
+      <h2>📋 活动规则</h2>
+      <ul>
+        <li>👥 <span class="rule-highlight">固定成员</span>: 需在 24 小时前报名</li>
+        <li>💰 <span class="rule-highlight">月费固定成员</span>: 每人 CAD$15</li>
+        <li>💳 缴费方式: e-Transfer + 备注姓名,默认每期自动续费</li>
+        <li>🚪 <span class="rule-highlight">Drop-in 模式</span>: 支持单次报名参与,先到先得</li>
+        <li>💵 Drop-in 价格: 每人 CAD$20,当天活动前支付可参与当次活动</li>
+        <li>👫 <span class="rule-highlight">人数上限</span>: Drop-in 和固定成员总和,每场最多 14 人(预留两块场地)</li>
+        <li>⏱️ 取消规则: 必须在 24 小时前取消,否则计入本期费用</li>
+        <li>📅 结算周期: 固定为每月最后一个周三,方便大家按月计算费用</li>
+        <li class="copyable-email">
+          <span style="display: inline-flex; align-items: center; gap: 6px;">
+            💌 <span class="marker-highlight">收款账户</span>
+          </span>
+          <span>Email: ailin.c1@icloud.com | Registered Name: Ailin Liao</span>
+          <button class="copy-email-button" data-email="ailin.c1@icloud.com">📋 复制</button>
+        </li>
+      </ul>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">
+        <h2>📊 活动统计</h2>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span class="stat-label">🎯 总场次数</span>
+          <span class="stat-value" id="total-sessions">0</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">💰 总费用 (CAD$)</span>
+          <span class="stat-value" id="total-cost">0.00</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">👥 总参与人次</span>
+          <span class="stat-value" id="total-participants">0</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">
+        <h2>✨ 创建活动</h2>
+      </div>
+      <form id="activity-form">
+        <input type="hidden" id="activity-id" />
+        <input type="hidden" id="entry-type" value="fixed" />
+
+        <div class="entrance-panel">
+          <div class="entry-grid">
+            <div class="entry-card active" data-entry="fixed">
+              <div style="font-size: 2rem; margin-bottom: 8px;">👥</div>
+              <h3>固定成员</h3>
+              <p>月费制报名</p>
+            </div>
+            <div class="entry-card" data-entry="dropin">
+              <div style="font-size: 2rem; margin-bottom: 8px;">🚪</div>
+              <h3>Drop-in 模式</h3>
+              <p>单次临时参与</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <label class="form-field">
+            <span>📅 日期</span>
+            <div class="date-selector">
+              <input id="activity-date" type="hidden" />
+              <div class="date-actions">
+                <button id="prev-session" class="secondary-button" type="button">◀ 上一场</button>
+                <input id="date-display" type="text" readonly />
+                <button id="next-session" class="secondary-button" type="button">下一场 ▶</button>
+              </div>
+            </div>
+            <small class="date-note">⚠️ 活动仅限周一和周三</small>
+          </label>
+        </div>
+
+        <div class="form-field">
+          <div class="field-label">
+            <span>🗓️ 下一场活动</span>
+            <span class="hint">💡 点击日期快速选择</span>
+          </div>
+          <div id="upcoming-summary" class="schedule-summary">
+            <span class="summary-pill">即将到来</span>
+            <span class="summary-date">加载中...</span>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <label class="form-field">
+            <span>⏰ 时间</span>
+            <div class="time-row">
+              <div class="fixed-field">🌆 19:00 (7 PM)</div>
+              <span>-</span>
+              <div class="fixed-field">🌙 21:00 (9 PM)</div>
+            </div>
+          </label>
+        </div>
+
+        <div class="form-field" style="display: none;" id="dropin-verify-section">
+          <div class="dropin-banner">
+            <strong>⚠️ Drop-in 提示:</strong> 请确保已通过 CAD$20 e-Transfer 完成付款
+          </div>
+          <label class="payment-check">
+            <input type="checkbox" id="payment-confirm" />
+            <span>✅ 我已完成 e-Transfer 付款</span>
+          </label>
+        </div>
+
+        <div class="form-field">
+          <div class="field-label">
+            <span>🏃 参与人员</span>
+            <span class="hint">👫 最多 14 人</span>
+          </div>
+          <ul id="participants-list" class="participants"></ul>
+        </div>
+
+        <footer class="form-actions">
+          <button class="primary-button" type="submit">💾 保存活动</button>
+        </footer>
+      </form>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">
+        <h2>📜 历史活动记录</h2>
+      </div>
+      <div id="records-container" class="records-grid"></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">
+        <h2>💳 月度账单统计</h2>
+      </div>
+      <div class="form-field">
+        <div class="field-label">
+          <span>📆 选择月份</span>
+          <span class="hint">💡 查看该月的固定成员账单</span>
+        </div>
+        <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 16px; flex-wrap: wrap;">
+          <button id="prev-month" class="secondary-button" type="button">◀ 上个月</button>
+          <input id="selected-month" type="month" style="padding: 10px 12px; border: 1px solid var(--border-soft); border-radius: var(--radius-sm); font-weight: 600;" />
+          <button id="next-month" class="secondary-button" type="button">下个月 ▶</button>
+        </div>
+      </div>
+      <div id="monthly-billing" class="records-grid"></div>
+    </section>
+  </main>
+
+  <div id="admin-modal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>👥 固定成员管理</h2>
+        <button class="modal-close" id="close-admin">×</button>
+      </div>
+      <div class="form-field">
+        <div class="field-label">
+          <span>➕ 添加固定成员</span>
+          <span class="hint" id="fixed-count">共 0 人</span>
+        </div>
+        <div class="participant-input">
+          <input id="fixed-member-name" type="text" placeholder="输入固定成员姓名" />
+          <button id="add-fixed-member" class="secondary-button" type="button">添加</button>
+        </div>
+      </div>
+      <div class="form-field">
+        <span>📋 固定成员列表</span>
+        <ul id="fixed-members-list" class="fixed-members-list"></ul>
+      </div>
+    </div>
+  </div>
+
+  <div id="password-modal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>🔒 管理员验证</h2>
+        <button class="modal-close" id="close-password">×</button>
+      </div>
+      <div class="form-field">
+        <span>🔑 请输入管理员密码</span>
+        <input id="password-input" type="password" placeholder="输入密码" />
+      </div>
+      <div class="password-actions">
+        <button id="cancel-password" class="ghost-button">取消</button>
+        <button id="submit-password" class="primary-button">✓ 确认</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="checkin-modal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>✅ 固定成员签到</h2>
+        <button class="modal-close" id="close-checkin">×</button>
+      </div>
+      <div class="form-field">
+        <div class="field-label">
+          <span>👥 选择参与的固定成员</span>
+          <span class="hint" id="checkin-count">已选 0 人</span>
+        </div>
+        <ul id="checkin-list" class="checkin-list"></ul>
+      </div>
+      <div class="password-actions">
+        <button id="cancel-checkin" class="ghost-button">取消</button>
+        <button id="confirm-checkin" class="primary-button">✓ 确认签到</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="dropin-modal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>🚪 Drop-in 参与登记</h2>
+        <button class="modal-close" id="close-dropin">×</button>
+      </div>
+      <div class="dropin-verify">
+        <p class="dropin-banner">
+          <strong>⚠️ Drop-in 提示:</strong> 请确保已通过 CAD$20 e-Transfer 完成付款至 ailin.c1@icloud.com
+        </p>
+        <label class="payment-check">
+          <input type="checkbox" id="dropin-payment-confirm" />
+          <span>✅ 我已完成 e-Transfer 付款</span>
+        </label>
+      </div>
+      <div class="form-field">
+        <div class="field-label">
+          <span>👥 参与人员</span>
+          <span class="hint">最多 14 人</span>
+        </div>
+        <div class="participant-input">
+          <input id="dropin-participant-name" type="text" placeholder="输入参与者姓名" />
+          <button id="dropin-add-participant" class="secondary-button" type="button">添加</button>
+        </div>
+        <ul id="dropin-participants-list" class="participants"></ul>
+      </div>
+      <div class="password-actions">
+        <button id="cancel-dropin" class="ghost-button">取消</button>
+        <button id="confirm-dropin" class="primary-button">✓ 确认签到</button>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <script>
+    const state = {
+      records: [],
+      participants: [],
+      entryType: "fixed",
+      paymentConfirmed: false,
+      fixedMembers: [
+        "Ailin", "Joyi", "Joyi队友", "Leon", "Rui", "Lillian", "Kennth", "Sam", "Gary", 
+        "William", "Sunny", "Johnny", "Desmond", "Alex", "Hugo", "Bill", "Jerry", "Frank", "Ling"
+      ],
+      dropinParticipants: []
+    };
+
+    function init() {
+      bindEvents();
+      renderUpcomingSessions();
+      
+      // 不创建示例数据，从空白开始
+      // if (state.records.length === 0) {
+      //   createSampleData();
+      // }
+      
+      renderAll();
+      resetForm();
+    }
+
+    function createSampleData() {
+      // 从2025年10月13日开始的活动日期
+      const octoberDates = [
+        "2025-10-13", "2025-10-15", "2025-10-20", "2025-10-22", 
+        "2025-10-27", "2025-10-29"
+      ];
+      
+      // 11月的日期
+      const novemberDates = [
+        "2025-11-03", "2025-11-05", "2025-11-10", "2025-11-12",
+        "2025-11-17", "2025-11-19", "2025-11-24", "2025-11-26"
+      ];
+      
+      // 12月初的日期
+      const decemberDates = ["2025-12-01", "2025-12-03", "2025-12-08"];
+      
+      const allDates = [...octoberDates, ...novemberDates, ...decemberDates];
+      
+      const members = [
+        "Ailin", "Joyi", "Joyi队友", "Leon", "Rui", "Lillian", 
+        "Kennth", "Sam", "Gary", "William", "Sunny", "Johnny", 
+        "Desmond", "Alex", "Hugo", "Bill", "Jerry", "Frank", "Ling"
+      ];
+      
+      allDates.forEach((date, index) => {
+        const participantCount = 3 + Math.floor(Math.random() * 3);
+        const shuffled = [...members].sort(() => Math.random() - 0.5);
+        const participants = shuffled.slice(0, participantCount);
+        
+        const record = {
+          id: "sample-" + date + "-" + index,
+          date: date,
+          startTime: "19:00",
+          endTime: "21:00",
+          totalFee: 120,
+          entryType: "fixed",
+          participants: participants,
+          dropinParticipants: [],
+          perPersonFee: (120 / participants.length).toFixed(2)
+        };
+        
+        state.records.push(record);
+      });
+      
+      state.records.sort((a, b) => b.date.localeCompare(a.date));
+    }
+
+    function bindEvents() {
+      document.getElementById("new-activity-button").addEventListener("click", resetForm);
+      
+      document.getElementById("admin-button").addEventListener("click", () => {
+        document.getElementById("password-modal").classList.add("active");
+        setTimeout(() => document.getElementById("password-input").focus(), 100);
+      });
+
+      document.getElementById("close-password").addEventListener("click", closePasswordModal);
+      document.getElementById("cancel-password").addEventListener("click", closePasswordModal);
+      
+      document.getElementById("submit-password").addEventListener("click", () => {
+        const pwd = document.getElementById("password-input").value.trim();
+        if (pwd === "12345") {
+          closePasswordModal();
+          document.getElementById("admin-modal").classList.add("active");
+          renderFixedMembers();
+        } else {
+          alert("密码错误");
+          document.getElementById("password-input").value = "";
+        }
+      });
+
+      document.getElementById("password-modal").addEventListener("click", (e) => {
+        if (e.target.id === "password-modal") closePasswordModal();
+      });
+
+      document.getElementById("close-admin").addEventListener("click", () => {
+        document.getElementById("admin-modal").classList.remove("active");
+      });
+
+      document.getElementById("admin-modal").addEventListener("click", (e) => {
+        if (e.target.id === "admin-modal") {
+          document.getElementById("admin-modal").classList.remove("active");
+        }
+      });
+
+      document.getElementById("add-fixed-member").addEventListener("click", handleFixedMemberAdd);
+      
+      document.getElementById("fixed-member-name").addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          handleFixedMemberAdd();
+        }
+      });
+
+      document.querySelectorAll(".entry-card").forEach((card) => {
+        card.addEventListener("click", () => {
+          const type = card.dataset.entry;
+          document.querySelectorAll(".entry-card").forEach((c) => c.classList.remove("active"));
+          card.classList.add("active");
+          state.entryType = type;
+          applyEntryTypeUI();
+          if (type === "fixed") {
+            openCheckinModal();
+          } else {
+            openDropinModal();
+          }
+        });
+      });
+
+      document.getElementById("participants-list").addEventListener("click", (e) => {
+        const btn = e.target.closest("button");
+        if (btn) {
+          const name = btn.dataset.name;
+          state.participants = state.participants.filter((p) => p !== name);
+          state.dropinParticipants = state.dropinParticipants.filter((p) => p !== name);
+          renderParticipants();
+        }
+      });
+
+      document.getElementById("prev-session").addEventListener("click", () => {
+        const current = document.getElementById("activity-date").value || toISODate(new Date());
+        setActivityDate(getPreviousSessionDate(current));
+      });
+
+      document.getElementById("next-session").addEventListener("click", () => {
+        const current = document.getElementById("activity-date").value || toISODate(new Date());
+        setActivityDate(getNextSessionDate(current));
+      });
+
+      document.getElementById("payment-confirm").addEventListener("change", (e) => {
+        state.paymentConfirmed = e.target.checked;
+        updateSubmitState();
+      });
+
+      document.getElementById("activity-form").addEventListener("submit", (e) => {
+        e.preventDefault();
+        if (!document.getElementById("activity-date").value) {
+          alert("请选择活动日期");
+          return;
+        }
+        if (state.entryType === "dropin" && !state.paymentConfirmed) {
+          alert("Drop-in 模式需要确认付款状态");
+          return;
+        }
+        if (state.participants.length === 0) {
+          alert("请至少添加一位参与者");
+          return;
+        }
+
+        const payload = {
+          date: document.getElementById("activity-date").value,
+          startTime: "19:00",
+          endTime: "21:00",
+          totalFee: 120,
+          entryType: state.entryType,
+          participants: [...state.participants],
+          dropinParticipants: [...state.dropinParticipants]
+        };
+
+        const activityId = document.getElementById("activity-id").value;
+        if (activityId) {
+          updateRecord(activityId, payload);
+          alert("✅ 活动更新成功!");
+        } else {
+          createRecord(payload);
+          alert("✅ 活动创建成功!");
+        }
+
+        resetForm();
+        renderAll();
+        
+        setTimeout(() => {
+          const recordsSection = document.querySelector("#records-container").parentElement;
+          recordsSection.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 300);
+      });
+
+      document.getElementById("close-dropin").addEventListener("click", () => {
+        closeDropinModal();
+        resetDropinModal();
+      });
+      document.getElementById("cancel-dropin").addEventListener("click", () => {
+        closeDropinModal();
+        resetDropinModal();
+      });
+      
+      document.getElementById("dropin-modal").addEventListener("click", (e) => {
+        if (e.target.id === "dropin-modal") {
+          closeDropinModal();
+          resetDropinModal();
+        }
+      });
+
+      document.getElementById("confirm-dropin").addEventListener("click", () => {
+        if (!document.getElementById("dropin-payment-confirm").checked) {
+          alert("请勾选付款确认");
+          return;
+        }
+        const list = document.getElementById("dropin-participants-list");
+        const names = Array.from(list.querySelectorAll("li"))
+          .map((item) => item.dataset.name)
+          .filter(Boolean);
+        
+        if (names.length === 0) {
+          alert("请先添加 Drop-in参与者");
+          return;
+        }
+        
+        names.forEach((name) => {
+          if (!state.participants.includes(name)) {
+            state.participants.push(name);
+          }
+          if (!state.dropinParticipants.includes(name)) {
+            state.dropinParticipants.push(name);
+          }
+        });
+        
+        closeDropinModal();
+        resetDropinModal();
+        renderParticipants();
+      });
+
+      document.getElementById("dropin-add-participant").addEventListener("click", handleDropinAdd);
+      
+      document.getElementById("dropin-participant-name").addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          handleDropinAdd();
+        }
+      });
+
+      document.getElementById("dropin-participants-list").addEventListener("click", (e) => {
+        const btn = e.target.closest("button");
+        if (btn) {
+          const name = btn.dataset.name;
+          btn.closest("li").remove();
+          state.dropinParticipants = state.dropinParticipants.filter((n) => n !== name);
+        }
+      });
+
+      document.getElementById("close-checkin").addEventListener("click", closeCheckinModal);
+      document.getElementById("cancel-checkin").addEventListener("click", closeCheckinModal);
+      
+      document.getElementById("checkin-modal").addEventListener("click", (e) => {
+        if (e.target.id === "checkin-modal") closeCheckinModal();
+      });
+
+      document.getElementById("confirm-checkin").addEventListener("click", () => {
+        const selected = Array.from(document.getElementById("checkin-list").querySelectorAll('input[type="checkbox"]:checked'))
+          .map((checkbox) => checkbox.value);
+        selected.forEach((name) => {
+          if (!state.participants.includes(name)) state.participants.push(name);
+        });
+        renderParticipants();
+        closeCheckinModal();
+      });
+
+      document.getElementById("checkin-list").addEventListener("change", updateCheckinCount);
+
+      document.querySelectorAll(".copy-email-button").forEach((button) => {
+        button.addEventListener("click", () => copyEmailToClipboard(button));
+      });
+
+      document.getElementById("selected-month").addEventListener("change", renderMonthlyBilling);
+      
+      document.getElementById("prev-month").addEventListener("click", () => {
+        const input = document.getElementById("selected-month");
+        const [year, month] = input.value.split("-").map(Number);
+        const prevMonth = new Date(year, month - 2, 1);
+        input.value = prevMonth.getFullYear() + "-" + String(prevMonth.getMonth() + 1).padStart(2, "0");
+        renderMonthlyBilling();
+      });
+
+      document.getElementById("next-month").addEventListener("click", () => {
+        const input = document.getElementById("selected-month");
+        const [year, month] = input.value.split("-").map(Number);
+        const nextMonth = new Date(year, month, 1);
+        input.value = nextMonth.getFullYear() + "-" + String(nextMonth.getMonth() + 1).padStart(2, "0");
+        renderMonthlyBilling();
+      });
+    }
+
+    function closePasswordModal() {
+      document.getElementById("password-modal").classList.remove("active");
+      document.getElementById("password-input").value = "";
+    }
+
+    function closeDropinModal() {
+      document.getElementById("dropin-modal").classList.remove("active");
+    }
+
+    function resetDropinModal() {
+      document.getElementById("dropin-participant-name").value = "";
+      document.getElementById("dropin-participants-list").innerHTML = "";
+      document.getElementById("dropin-payment-confirm").checked = false;
+      state.paymentConfirmed = false;
+      updateSubmitState();
+    }
+
+    function closeCheckinModal() {
+      document.getElementById("checkin-modal").classList.remove("active");
+    }
+
+    function openCheckinModal() {
+      const list = document.getElementById("checkin-list");
+      list.innerHTML = "";
+      
+      if (state.fixedMembers.length === 0) {
+        const empty = document.createElement("div");
+        empty.className = "empty-state";
+        empty.innerHTML = "👤 暂无固定成员<br><small style='margin-top: 8px; display: block;'>请先在管理员面板添加</small>";
+        list.appendChild(empty);
+      } else {
+        state.fixedMembers.forEach((name) => {
+          const item = document.createElement("div");
+          item.className = "checkin-item";
+          const checkbox = document.createElement("input");
+          checkbox.type = "checkbox";
+          checkbox.id = "checkin-" + name;
+          checkbox.value = name;
+          checkbox.checked = state.participants.includes(name);
+          const label = document.createElement("label");
+          label.htmlFor = "checkin-" + name;
+          label.textContent = name;
+          item.append(checkbox, label);
+          list.appendChild(item);
+        });
+      }
+      updateCheckinCount();
+      document.getElementById("checkin-modal").classList.add("active");
+    }
+
+    function openDropinModal() {
+      document.getElementById("dropin-modal").classList.add("active");
+      setTimeout(() => document.getElementById("dropin-participant-name").focus(), 100);
+    }
+
+    function updateCheckinCount() {
+      const count = document.getElementById("checkin-list").querySelectorAll('input[type="checkbox"]:checked').length;
+      document.getElementById("checkin-count").textContent = "已选 " + count + " 人";
+    }
+
+    function copyEmailToClipboard(button) {
+      const email = button.dataset.email;
+      if (!email) return;
+      const original = button.textContent;
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(email).then(() => {
+          button.classList.add("copied");
+          button.textContent = "已复制";
+          setTimeout(() => {
+            button.classList.remove("copied");
+            button.textContent = original;
+          }, 1600);
+        }).catch(() => {
+          alert("复制失败,请手动复制: " + email);
+        });
+      } else {
+        alert("请手动复制: " + email);
+      }
+    }
+
+    function handleFixedMemberAdd() {
+      const input = document.getElementById("fixed-member-name");
+      const name = input.value.trim();
+      if (!name) return;
+      if (state.fixedMembers.includes(name)) {
+        input.value = "";
+        return;
+      }
+      state.fixedMembers.push(name);
+      input.value = "";
+      renderFixedMembers();
+    }
+
+    function renderFixedMembers() {
+      const list = document.getElementById("fixed-members-list");
+      list.innerHTML = "";
+      document.getElementById("fixed-count").textContent = "共 " + state.fixedMembers.length + " 人";
+
+      if (state.fixedMembers.length === 0) {
+        const empty = document.createElement("div");
+        empty.className = "empty-state";
+        empty.innerHTML = "👤 暂无固定成员<br><small style='margin-top: 8px; display: block;'>在上方输入框添加成员</small>";
+        list.appendChild(empty);
+        return;
+      }
+
+      state.fixedMembers.forEach((name) => {
+        const li = document.createElement("li");
+        const span = document.createElement("span");
+        span.textContent = name;
+        const btn = document.createElement("button");
+        btn.textContent = "×";
+        btn.addEventListener("click", () => {
+          if (confirm("确定要删除 " + name + " 吗?")) {
+            state.fixedMembers = state.fixedMembers.filter((m) => m !== name);
+            renderFixedMembers();
+          }
+        });
+        li.append(span, btn);
+        list.appendChild(li);
+      });
+    }
+
+    function handleDropinAdd() {
+      const input = document.getElementById("dropin-participant-name");
+      const list = document.getElementById("dropin-participants-list");
+      const name = input.value.trim();
+      if (!name) return;
+      if (Array.from(list.querySelectorAll("li")).some((li) => li.dataset.name === name)) {
+        input.value = "";
+        return;
+      }
+
+      const li = document.createElement("li");
+      li.dataset.name = name;
+      const number = document.createElement("span");
+      number.className = "participant-number";
+      number.textContent = list.children.length + 1;
+      const nameSpan = document.createElement("span");
+      nameSpan.className = "participant-name";
+      nameSpan.textContent = name;
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.dataset.name = name;
+      btn.textContent = "×";
+      li.append(number, nameSpan, btn);
+      list.appendChild(li);
+
+      if (!state.dropinParticipants.includes(name)) {
+        state.dropinParticipants.push(name);
+      }
+      input.value = "";
+    }
+
+    function renderParticipants() {
+      const list = document.getElementById("participants-list");
+      list.innerHTML = "";
+
+      for (let i = 0; i < 14; i++) {
+        const li = document.createElement("li");
+        if (i < state.participants.length) {
+          const name = state.participants[i];
+          const isDropin = state.dropinParticipants.includes(name);
+          if (isDropin) li.classList.add("dropin-member");
+
+          const number = document.createElement("span");
+          number.className = "participant-number";
+          number.textContent = i + 1;
+          const nameSpan = document.createElement("span");
+          nameSpan.className = "participant-name";
+          nameSpan.textContent = name;
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.dataset.name = name;
+          btn.textContent = "×";
+
+          li.append(number, nameSpan);
+          if (isDropin) {
+            const badge = document.createElement("span");
+            badge.className = "participant-type-badge";
+            badge.textContent = "D";
+            badge.title = "Drop-in 成员";
+            li.appendChild(badge);
+          }
+          li.appendChild(btn);
+        } else {
+          li.className = "empty";
+          li.textContent = "空位 " + (i + 1);
+        }
+        list.appendChild(li);
+      }
+    }
+
+    function createRecord(payload) {
+      const record = {
+        id: generateId(),
+        ...payload,
+        perPersonFee: (120 / payload.participants.length).toFixed(2)
+      };
+      state.records.unshift(record);
+    }
+
+    function updateRecord(id, payload) {
+      state.records = state.records.map((record) => {
+        if (record.id !== id) return record;
+        return {
+          ...record,
+          ...payload,
+          perPersonFee: (120 / payload.participants.length).toFixed(2)
+        };
+      });
+    }
+
+    function deleteRecord(id) {
+      state.records = state.records.filter((record) => record.id !== id);
+      renderAll();
+    }
+
+    function renderAll() {
+      renderRecords();
+      renderStats();
+      renderMonthlyBilling();
+    }
+
+    function renderRecords() {
+      const container = document.getElementById("records-container");
+      container.innerHTML = "";
+
+      if (state.records.length === 0) {
+        const empty = document.createElement("div");
+        empty.className = "empty-state";
+        empty.innerHTML = "🏸 暂无活动记录<br><small style='margin-top: 8px; display: block;'>点击上方按钮创建新活动</small>";
+        container.appendChild(empty);
+        return;
+      }
+
+      state.records.forEach((record) => {
+        const card = document.createElement("article");
+        card.className = "record-card";
+        
+        const header = document.createElement("header");
+        header.className = "record-header";
+        const info = document.createElement("div");
+        const date = document.createElement("p");
+        date.className = "record-date";
+        date.textContent = formatDate(record.date);
+        const time = document.createElement("p");
+        time.className = "record-time";
+        time.textContent = record.startTime + " - " + record.endTime;
+        const entry = document.createElement("span");
+        entry.className = "record-entry";
+        entry.textContent = record.entryType === "dropin" ? "Drop-in 模式" : "固定成员";
+        info.append(date, time, entry);
+        
+        const actions = document.createElement("div");
+        actions.className = "record-actions";
+        const editBtn = document.createElement("button");
+        editBtn.className = "icon-button";
+        editBtn.textContent = "✏️";
+        editBtn.addEventListener("click", () => loadRecord(record.id));
+        const deleteBtn = document.createElement("button");
+        deleteBtn.className = "icon-button";
+        deleteBtn.textContent = "🗑️";
+        deleteBtn.addEventListener("click", () => {
+          if (confirm("确定要删除这条记录吗?")) deleteRecord(record.id);
+        });
+        actions.append(editBtn, deleteBtn);
+        header.append(info, actions);
+        
+        const body = document.createElement("section");
+        body.className = "record-body";
+        
+        const pList = document.createElement("ul");
+        pList.className = "record-participants";
+        record.participants.forEach((name, index) => {
+          const li = document.createElement("li");
+          const isDropin = record.dropinParticipants && record.dropinParticipants.includes(name);
+          if (isDropin) li.classList.add("dropin-member");
+          const num = document.createElement("span");
+          num.className = "participant-num";
+          num.textContent = index + 1;
+          const nameSpan = document.createElement("span");
+          nameSpan.textContent = name;
+          li.append(num, nameSpan);
+          pList.appendChild(li);
+        });
+        
+        body.append(pList);
+        card.append(header, body);
+        container.appendChild(card);
+      });
+    }
+
+    function renderStats() {
+      document.getElementById("total-sessions").textContent = state.records.length;
+      const totalFee = state.records.reduce((sum, r) => sum + r.totalFee, 0);
+      document.getElementById("total-cost").textContent = totalFee.toFixed(2);
+      const totalP = state.records.reduce((sum, r) => sum + r.participants.length, 0);
+      document.getElementById("total-participants").textContent = totalP;
+    }
+
+    function renderMonthlyBilling() {
+      const selectedMonth = document.getElementById("selected-month");
+      if (!selectedMonth.value) {
+        // 默认显示2025年10月
+        selectedMonth.value = "2025-10";
+      }
+
+      const container = document.getElementById("monthly-billing");
+      const [year, month] = selectedMonth.value.split("-").map(Number);
+      
+      const monthRecords = state.records.filter((record) => {
+        const recordDate = new Date(record.date + "T00:00:00");
+        return recordDate.getFullYear() === year && 
+               recordDate.getMonth() + 1 === month &&
+               record.entryType === "fixed";
+      });
+
+      container.innerHTML = "";
+
+      if (monthRecords.length === 0) {
+        const empty = document.createElement("div");
+        empty.className = "empty-state";
+        empty.innerHTML = "📭 该月暂无固定成员活动记录<br><small style='margin-top: 8px; display: block;'>切换其他月份查看账单</small>";
+        container.appendChild(empty);
+        return;
+      }
+
+      const memberStats = {};
+      monthRecords.forEach((record) => {
+        record.participants.forEach((name) => {
+          const isDropin = record.dropinParticipants && record.dropinParticipants.includes(name);
+          if (!isDropin) {
+            if (!memberStats[name]) {
+              memberStats[name] = { count: 0, dates: [], activities: [] };
+            }
+            memberStats[name].count++;
+            memberStats[name].dates.push(formatDate(record.date));
+            memberStats[name].activities.push({
+              date: record.date,
+              formattedDate: formatDate(record.date),
+              participants: record.participants.filter(p => !record.dropinParticipants || !record.dropinParticipants.includes(p))
+            });
+          }
+        });
+      });
+
+      const lastWednesday = getLastWednesdayOfMonth(parseInt(year), parseInt(month));
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const isAfterLastWednesday = today >= lastWednesday;
+
+      const summaryCard = document.createElement("div");
+      summaryCard.className = "record-card";
+      summaryCard.style.background = "linear-gradient(135deg, rgba(111, 190, 120, 0.1), rgba(111, 190, 120, 0.05))";
+      summaryCard.style.border = "2px solid var(--accent)";
+      
+      const summaryHeader = document.createElement("h3");
+      summaryHeader.style.margin = "0 0 16px";
+      summaryHeader.style.color = "var(--accent)";
+      summaryHeader.textContent = year + "年" + month + "月 账单总结";
+      
+      const lastWedInfo = document.createElement("p");
+      lastWedInfo.style.margin = "0 0 12px";
+      lastWedInfo.style.color = "var(--text-secondary)";
+      lastWedInfo.textContent = "最后一个周三: " + formatDate(toISODate(lastWednesday)) + 
+        (isAfterLastWednesday ? " (已过结算日)" : " (未到结算日)");
+      
+      summaryCard.append(summaryHeader, lastWedInfo);
+
+      const activitiesSection = document.createElement("div");
+      activitiesSection.style.marginBottom = "20px";
+      activitiesSection.style.padding = "16px";
+      activitiesSection.style.background = "rgba(255, 255, 255, 0.8)";
+      activitiesSection.style.borderRadius = "var(--radius-sm)";
+      activitiesSection.style.border = "1px solid rgba(111, 190, 120, 0.3)";
+
+      const activitiesTitle = document.createElement("h4");
+      activitiesTitle.style.margin = "0 0 12px";
+      activitiesTitle.style.color = "var(--accent)";
+      activitiesTitle.textContent = "📅 活动明细 (共" + monthRecords.length + "场)";
+      activitiesSection.appendChild(activitiesTitle);
+
+      monthRecords.sort((a, b) => b.date.localeCompare(a.date)).forEach((record) => {
+        const activityItem = document.createElement("div");
+        activityItem.style.marginBottom = "8px";
+        activityItem.style.padding = "12px";
+        activityItem.style.background = "rgba(111, 190, 120, 0.08)";
+        activityItem.style.borderRadius = "8px";
+        activityItem.style.cursor = "pointer";
+        activityItem.style.transition = "all 0.2s";
+        activityItem.style.border = "1px solid rgba(111, 190, 120, 0.2)";
+
+        const fixedParticipants = record.participants.filter(p => !record.dropinParticipants || !record.dropinParticipants.includes(p));
+        
+        const header = document.createElement("div");
+        header.style.display = "flex";
+        header.style.justifyContent = "space-between";
+        header.style.alignItems = "center";
+
+        const dateText = document.createElement("strong");
+        dateText.textContent = formatDate(record.date);
+        dateText.style.color = "var(--text-primary)";
+
+        const countBadge = document.createElement("span");
+        countBadge.style.padding = "2px 8px";
+        countBadge.style.background = "var(--accent)";
+        countBadge.style.color = "white";
+        countBadge.style.borderRadius = "999px";
+        countBadge.style.fontSize = "0.85rem";
+        countBadge.style.fontWeight = "600";
+        countBadge.textContent = fixedParticipants.length + "人参与";
+
+        header.append(dateText, countBadge);
+
+        const detailsDiv = document.createElement("div");
+        detailsDiv.style.display = "none";
+        detailsDiv.style.marginTop = "12px";
+        detailsDiv.style.paddingTop = "12px";
+        detailsDiv.style.borderTop = "1px dashed rgba(111, 190, 120, 0.3)";
+
+        const participantsList = document.createElement("div");
+        participantsList.style.display = "grid";
+        participantsList.style.gridTemplateColumns = "repeat(auto-fill, minmax(120px, 1fr))";
+        participantsList.style.gap = "8px";
+        participantsList.style.marginTop = "8px";
+
+        fixedParticipants.forEach((name, index) => {
+          const pItem = document.createElement("div");
+          pItem.style.padding = "6px 10px";
+          pItem.style.background = "rgba(111, 190, 120, 0.15)";
+          pItem.style.borderRadius = "6px";
+          pItem.style.fontSize = "0.9rem";
+          pItem.style.fontWeight = "500";
+          pItem.textContent = (index + 1) + ". " + name;
+          participantsList.appendChild(pItem);
+        });
+
+        const feeInfo = document.createElement("div");
+        feeInfo.style.marginTop = "12px";
+        feeInfo.style.padding = "8px";
+        feeInfo.style.background = "rgba(111, 190, 120, 0.1)";
+        feeInfo.style.borderRadius = "6px";
+        feeInfo.style.fontSize = "0.9rem";
+        feeInfo.style.color = "var(--text-secondary)";
+        feeInfo.innerHTML = "<strong>费用:</strong> 每人 CAD$15";
+
+        detailsDiv.append(participantsList, feeInfo);
+
+        activityItem.append(header, detailsDiv);
+
+        activityItem.addEventListener("click", () => {
+          const isOpen = detailsDiv.style.display === "block";
+          detailsDiv.style.display = isOpen ? "none" : "block";
+          activityItem.style.background = isOpen ? "rgba(111, 190, 120, 0.08)" : "rgba(111, 190, 120, 0.15)";
+        });
+
+        activityItem.addEventListener("mouseenter", () => {
+          if (detailsDiv.style.display !== "block") {
+            activityItem.style.background = "rgba(111, 190, 120, 0.12)";
+          }
+        });
+
+        activityItem.addEventListener("mouseleave", () => {
+          if (detailsDiv.style.display !== "block") {
+            activityItem.style.background = "rgba(111, 190, 120, 0.08)";
+          }
+        });
+
+        activitiesSection.appendChild(activityItem);
+      });
+
+      summaryCard.appendChild(activitiesSection);
+
+      const memberList = Object.entries(memberStats).sort((a, b) => b[1].count - a[1].count);
+      
+      const membersTitle = document.createElement("h4");
+      membersTitle.style.margin = "0 0 12px";
+      membersTitle.style.color = "var(--accent)";
+      membersTitle.textContent = "👥 成员账单明细";
+      summaryCard.appendChild(membersTitle);
+
+      memberList.forEach(([name, stats]) => {
+        const memberCard = document.createElement("div");
+        memberCard.style.padding = "16px";
+        memberCard.style.background = "rgba(255, 255, 255, 0.8)";
+        memberCard.style.borderRadius = "var(--radius-sm)";
+        memberCard.style.border = "1px solid rgba(111, 190, 120, 0.2)";
+        memberCard.style.marginBottom = "12px";
+
+        const nameRow = document.createElement("div");
+        nameRow.style.display = "flex";
+        nameRow.style.justifyContent = "space-between";
+        nameRow.style.alignItems = "center";
+        nameRow.style.marginBottom = "8px";
+
+        const nameText = document.createElement("strong");
+        nameText.textContent = name;
+        nameText.style.fontSize = "1.1rem";
+
+        const amount = document.createElement("span");
+        amount.style.fontSize = "1.3rem";
+        amount.style.fontWeight = "700";
+        amount.style.color = "var(--accent)";
+        amount.textContent = "CAD $" + (stats.count * 15).toFixed(2);
+
+        nameRow.append(nameText, amount);
+
+        const statsRow = document.createElement("div");
+        statsRow.style.color = "var(--text-primary)";
+        statsRow.style.fontSize = "1rem";
+        statsRow.style.fontWeight = "600";
+        statsRow.style.marginBottom = "8px";
+        statsRow.innerHTML = "参加次数: <strong style='color: var(--accent);'>" + stats.count + "</strong> 次 × $15 = <strong style='color: var(--accent);'>$" + (stats.count * 15).toFixed(2) + "</strong>";
+
+        const datesRow = document.createElement("div");
+        datesRow.style.marginTop = "8px";
+        datesRow.style.fontSize = "0.85rem";
+        datesRow.style.color = "var(--text-secondary)";
+        datesRow.innerHTML = "<strong>活动日期:</strong> " + stats.dates.join(", ");
+
+        memberCard.append(nameRow, statsRow, datesRow);
+        summaryCard.appendChild(memberCard);
+      });
+
+      const totalAmount = memberList.reduce((sum, [_, stats]) => sum + stats.count * 15, 0);
+      const totalDiv = document.createElement("div");
+      totalDiv.style.marginTop = "16px";
+      totalDiv.style.padding = "16px";
+      totalDiv.style.background = "rgba(111, 190, 120, 0.15)";
+      totalDiv.style.borderRadius = "var(--radius-sm)";
+      totalDiv.style.textAlign = "center";
+      totalDiv.style.fontSize = "1.2rem";
+      totalDiv.style.fontWeight = "700";
+      totalDiv.innerHTML = "本月总收入: <span style='color: var(--accent); font-size: 1.5rem;'>CAD $" + totalAmount.toFixed(2) + "</span>";
+      
+      summaryCard.appendChild(totalDiv);
+      container.appendChild(summaryCard);
+    }
+
+    function getLastWednesdayOfMonth(year, month) {
+      const lastDay = new Date(year, month, 0);
+      while (lastDay.getDay() !== 3) {
+        lastDay.setDate(lastDay.getDate() - 1);
+      }
+      return lastDay;
+    }
+
+    function loadRecord(id) {
+      const record = state.records.find((item) => item.id === id);
+      if (!record) return;
+      state.entryType = record.entryType;
+      state.participants = [...record.participants];
+      state.dropinParticipants = record.dropinParticipants ? [...record.dropinParticipants] : [];
+      document.getElementById("entry-type").value = state.entryType;
+      document.querySelectorAll(".entry-card").forEach((card) => {
+        card.classList.toggle("active", card.dataset.entry === state.entryType);
+      });
+      document.getElementById("activity-id").value = record.id;
+      setActivityDate(record.date);
+      renderParticipants();
+      applyEntryTypeUI();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function resetForm() {
+      document.getElementById("activity-form").reset();
+      document.getElementById("activity-id").value = "";
+      state.entryType = "fixed";
+      state.paymentConfirmed = false;
+      state.participants = [];
+      state.dropinParticipants = [];
+      document.getElementById("payment-confirm").checked = false;
+      setActivityDate(getInitialSessionDate());
+      renderParticipants();
+      applyEntryTypeUI();
+      renderUpcomingSessions();
+    }
+
+    function applyEntryTypeUI() {
+      document.getElementById("entry-type").value = state.entryType;
+      document.querySelectorAll(".entry-card").forEach((card) => {
+        card.classList.toggle("active", card.dataset.entry === state.entryType);
+      });
+      const section = document.getElementById("dropin-verify-section");
+      if (section) {
+        section.style.display = state.entryType === "dropin" ? "grid" : "none";
+      }
+      updateSubmitState();
+    }
+
+    function updateSubmitState() {
+      const btn = document.querySelector("#activity-form .primary-button");
+      const disabled = state.entryType === "dropin" && !state.paymentConfirmed;
+      btn.disabled = disabled;
+      btn.style.opacity = disabled ? "0.6" : "1";
+      btn.style.cursor = disabled ? "not-allowed" : "pointer";
+    }
+
+    function setActivityDate(isoDate) {
+      document.getElementById("activity-date").value = isoDate;
+      document.getElementById("date-display").value = formatDate(isoDate);
+      updateUpcomingSummary(isoDate);
+    }
+
+    function updateUpcomingSummary(selectedDate) {
+      const summary = document.getElementById("upcoming-summary");
+      const pill = summary.querySelector(".summary-pill");
+      const dateEl = summary.querySelector(".summary-date");
+      
+      const date = new Date(selectedDate + "T00:00:00");
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const daysDiff = Math.floor((date - today) / (1000 * 60 * 60 * 24));
+      
+      if (daysDiff < 0) {
+        pill.textContent = "已过去";
+      } else if (daysDiff === 0) {
+        pill.textContent = "今天";
+      } else if (daysDiff === 1) {
+        pill.textContent = "明天";
+      } else if (daysDiff <= 7) {
+        pill.textContent = daysDiff + " 天后";
+      } else {
+        pill.textContent = "即将到来";
+      }
+      dateEl.textContent = formatDate(selectedDate);
+    }
+
+    function renderUpcomingSessions() {
+      // 只更新下一场活动的显示，不再渲染列表
+      const currentDate = document.getElementById("activity-date").value || toISODate(new Date());
+      updateUpcomingSummary(currentDate);
+    }
+
+    function formatDate(value) {
+      if (!value) return "";
+      const date = new Date(value + "T00:00:00");
+      if (isNaN(date.getTime())) return value;
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      const weekday = getWeekdayName(date.getDay());
+      return year + " " + month + "." + day + " " + weekday;
+    }
+
+    function getWeekdayName(index) {
+      const names = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+      return names[index] || "";
+    }
+
+    function getInitialSessionDate() {
+      const latest = getLatestSessionDate();
+      if (latest) return getNextSessionDate(latest);
+      return getNextSessionDate();
+    }
+
+    function getLatestSessionDate() {
+      if (state.records.length === 0) return null;
+      return state.records.reduce((latest, r) => (r.date > latest ? r.date : latest), state.records[0].date);
+    }
+
+    function getPreviousSessionDate(baseIso) {
+      const cursor = baseIso ? new Date(baseIso + "T00:00:00") : new Date();
+      cursor.setDate(cursor.getDate() - 1);
+      while (!isSessionDay(cursor)) {
+        cursor.setDate(cursor.getDate() - 1);
+      }
+      return toISODate(cursor);
+    }
+
+    function getNextSessionDate(baseIso) {
+      const cursor = baseIso ? new Date(baseIso + "T00:00:00") : new Date();
+      cursor.setDate(cursor.getDate() + 1);
+      while (!isSessionDay(cursor)) {
+        cursor.setDate(cursor.getDate() + 1);
+      }
+      return toISODate(cursor);
+    }
+
+    function isSessionDay(date) {
+      const day = date.getDay();
+      return day === 1 || day === 3;
+    }
+
+    function toISODate(date) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      return year + "-" + month + "-" + day;
+    }
+
+    function getSessionsForNextMonth() {
+      const sessions = [];
+      const start = new Date();
+      start.setHours(0, 0, 0, 0);
+      const end = new Date(start);
+      end.setMonth(end.getMonth() + 1);
+      const cursor = new Date(start);
+      while (cursor <= end) {
+        if (isSessionDay(cursor)) {
+          const iso = toISODate(cursor);
+          sessions.push({ iso, formatted: formatDate(iso) });
+        }
+        cursor.setDate(cursor.getDate() + 1);
+      }
+      return sessions;
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", init);
+    } else {
+      init();
+    }
+  </script>
+</body>
+</html>
